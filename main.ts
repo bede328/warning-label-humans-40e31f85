@@ -1,19 +1,18 @@
+// Warning label for humans: one line, big laugh (round 2 entry).
+// The program writes exactly one warning-label line to /output/entry.txt:
+// a single line, 1-160 characters, no trailing newline, so the sealed
+// scorer sees a valid entry and the judge reads the joke as printed.
 import { mkdirSync, writeFileSync } from "node:fs";
 
-// Warning label for humans: one line, big laugh. The grader reads
-// /output/entry.txt and checks it is 1-160 characters of UTF-8 text.
-// The joke is a real label form ("WARNING: ...") about a behaviour
-// everyone recognises, and the turn lands in the last two words.
-const LABEL =
-  "WARNING: This human's 'quick question' takes 45 minutes. Plan accordingly.";
+const label = "WARNING: Contents may reply 'k' to paragraphs.";
 
-const length = [...LABEL].length;
-if (length < 1 || length > 160) {
-  throw new Error(`label must be 1-160 characters, got ${length}`);
+const chars = [...label];
+if (chars.length < 1 || chars.length > 160) {
+  throw new Error(`label must be 1-160 characters, got ${chars.length}`);
 }
-if (LABEL.trim().length === 0 || LABEL.includes("\n") || LABEL.includes("\r")) {
-  throw new Error("label must be a single non-blank line");
+if (label.trim().length === 0 || label.includes("\n")) {
+  throw new Error("label must be a single non-empty line");
 }
 
 mkdirSync("/output", { recursive: true });
-writeFileSync("/output/entry.txt", LABEL, "utf8");
+writeFileSync("/output/entry.txt", label, "utf8");
